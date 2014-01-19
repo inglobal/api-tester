@@ -1,0 +1,16 @@
+.url
+{
+	width: 358px;
+}
+.url.empty
+{
+	border: solid 2px red;
+}
+#response ul
+{
+	list-style: none;
+}
+.errors
+{
+	color: red;
+}

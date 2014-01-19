@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="/css/main.css?v=1" rel="stylesheet"></link>
+		<script src="/js/jquery-1.10.2.min.js"></script>
+		<script src="/js/main.js"></script>
+	</head>
+	<body>
+		<h1>Web-приложение для тестирования API сервера</h1>
+		<?php echo Form::open(array('url' => 'send')); ?>
+			<table>
+				<tr>
+					<td colspan="3">Request method:
+						<?php echo Form::label('method', 'GET'); ?>
+						<?php echo Form::radio('method', 'GET', false); ?>
+						<?php echo Form::label('method', 'POST'); ?>
+						<?php echo Form::radio('method', 'POST'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td>url:</td>
+					<td colspan="2"><?php echo Form::text('url', '', array('class' => 'url')); ?></td>
+				</tr>
+				<tr>
+					<td colspan="3">Parameter list:</td>
+				</tr>
+			<?php for ($i = 0; $i < 5; $i++): ?>
+				<tr>
+					<td>Name:</td>
+					<td><?php echo Form::text('param[]', Session::get('param_'. $i)); ?></td>
+					<td>Value: <?php echo Form::text('value[]', Session::get('value_'. $i)); ?></td>
+				</tr>
+			<?php endfor; ?>
+			</table>
+			<?php echo Form::submit('Send'); ?>
+		<?php echo Form::close(); ?>
+		<?php if (Session::has('response')): ?>
+		<p>Response:</p>
+		<code id="response"></code>
+		<script>$('#response').html(formatJSON(<?php echo Session::get('response'); ?>));</script>
+		<?php endif; ?>
+
+		<?php if (Session::has('errors')): ?>
+		<p>Errors:</p>
+			<?php foreach(Session::get('errors')->all() as $error): ?>
+				<p class="errors"><?php echo $error; ?></p>
+			<?php endforeach; ?>
+		<p></p>
+		<?php endif; ?>
+	</body>
+</html>
