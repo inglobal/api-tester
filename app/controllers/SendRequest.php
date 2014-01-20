@@ -38,9 +38,9 @@ class SendRequest extends Controller {
 		$response = $this->curl->_simple_call(strtolower($input['method']), $input['url'], $data);
 		if ( ! $response ) {
 			$http = new HTTPHelper\HTTPStatus;
-			$response = json_encode($http->getStatus($this->curl->info['http_code']));
+			$response = $http->getStatus($this->curl->info['http_code']);
 		}
-		Session::flash('response', $response);
+		Session::flash('response', json_encode($response));
 		return Redirect::to('/');
 	}
 }
