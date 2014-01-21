@@ -50,17 +50,7 @@
             @if (Session::has('response'))
             <p>Response:</p>
             <code id="response"></code>
-            <script>
-                (function () {
-                    var response = {{ Session::get('response') }};
-                    try {
-                        response = JSON.parse(response);
-                    } catch (e) {
-                        response = 'Invalid response format'
-                    }
-                    $('#response').html(formatJSON(response));
-                }());
-            </script>
+            <script>$('#response').html(formatJSON({{ Session::get('response') }}));</script>
             @endif
 
             @if (Session::has('errors'))

@@ -38,9 +38,11 @@ class SendRequest extends Controller {
 		$response = $this->curl->_simple_call(strtolower($input['method']), $input['url'], $data);
 		if ( ! $response ) {
 			$http = new HTTPHelper\HTTPStatus;
-			$response = $http->getStatus($this->curl->info['http_code']);
-		}
-		Session::flash('response', json_encode($response));
+			$response = json_encode($http->getStatus($this->curl->info['http_code']));
+		} elseif (json_decode($response) === NULL) {
+            $response = json_encode('Invalid response format');
+        }
+		Session::flash('response', $response);
 		return Redirect::to('/');
 	}
 }
